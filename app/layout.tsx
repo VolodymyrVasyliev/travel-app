@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
-
-import "./globals.css";
-import Header from "@/components/Header/Header";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import { Nunito_Sans, Sora } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
 
+
+const nunito = Nunito_Sans({
+  subsets: ["latin"],
+  variable: "--second-family",
+  weight: ["400", "500", "600", "700"]
+});
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--first-family",
+   weight: ["400", "700"],
+});
 
 
 export const metadata: Metadata = {
@@ -18,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={`${nunito.variable} ${sora.variable}`}>
         <Header />
         {children}
         <Footer />
