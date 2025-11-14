@@ -7,28 +7,22 @@ import { getAuthSession, getCurrentUser } from "@/lib/api/clientApi";
 
 const privateRoutes = ["/profile", "/dashboard"];
 
-export default function AuthProvider({ children }: { children: ReactNode }) {
-  const {
-    isAuthenticated,
-    setUser,
-    clearIsAuthenticated,
-    loading,
-    setLoading,
-  } = useAuthStore();
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export default function AuthProvider({ children }: AuthProviderProps) {
+  const { isAuthenticated, setUser, clearIsAuthenticated, loading, setLoading } = useAuthStore();
   const pathname = usePathname();
   const router = useRouter();
 
-  const isPrivateRoute = privateRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
+  const isPrivateRoute = privateRoutes.some((route) => pathname.startsWith(route));
 
   useEffect(() => {
     const initAuth = async () => {
       setLoading(true);
-
       try {
         const session = await getAuthSession();
-
         if (session?.success) {
           const userData = await getCurrentUser();
           if (userData) {
@@ -36,38 +30,21 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
             return;
           }
         }
-
         clearIsAuthenticated();
-        if (isPrivateRoute) {
-          router.push("/auth");
-        }
+        if (isPrivateRoute) router.push("/");
       } catch {
         clearIsAuthenticated();
-        if (isPrivateRoute) {
-          router.push("/auth");
-        }
+        if (isPrivateRoute) router.push("/");
       } finally {
         setLoading(false);
       }
     };
 
-    initAuth();
-  }, [
-    pathname,
-    setUser,
-    clearIsAuthenticated,
-    setLoading,
-    isPrivateRoute,
-    router,
-  ]);
-
-  useEffect(() => {
-    if (!loading && isPrivateRoute && !isAuthenticated) {
-      clearIsAuthenticated();
-      router.push("/auth");
-      return;
+    // Only fetch if not authenticated yet
+    if (!isAuthenticated) {
+      initAuth();
     }
-  }, [isAuthenticated, isPrivateRoute, loading, clearIsAuthenticated, router]);
+  }, [pathname, isPrivateRoute, router, isAuthenticated, setUser, clearIsAuthenticated, setLoading]);
 
   if (loading) {
     return (
@@ -85,9 +62,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     );
   }
 
-  if (isPrivateRoute && !isAuthenticated) {
-    return null;
-  }
+  if (isPrivateRoute && !isAuthenticated) return null;
 
   return <>{children}</>;
 }

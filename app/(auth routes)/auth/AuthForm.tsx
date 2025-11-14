@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Formik, Form, Field, FormikHelpers, FieldProps } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 import { loginUser, registerUser } from "@/lib/api/clientApi";
 import css from "./page.module.css";
+import AuthNavigation from "@/components/AuthNavigation/AuthNavigation";
 
 interface AuthFormProps {
   mode: "login" | "register";
@@ -20,31 +20,8 @@ interface AuthValues {
 }
 
 export default function AuthForm({ mode }: AuthFormProps) {
-  const router = useRouter();
   const { setUser, setLoading, loading } = useAuthStore();
   const [status, setStatus] = useState<string | null>(null);
-
-  const mutation = useMutation({
-    mutationFn: async (values: AuthValues) => {
-      if (mode === "login") {
-        return await loginUser({ email: values.email!, password: values.password! });
-      } else {
-        return await registerUser({
-          name: values.username!,
-          email: values.email!,
-          password: values.password!,
-        });
-      }
-    },
-    onSuccess: (user) => {
-      setUser(user);
-      router.push("/profile");
-    },
-    onError: (err: unknown) => {
-      if (err instanceof Error) setStatus(err.message);
-      else setStatus("Сталася помилка. Спробуйте ще раз.");
-    },
-  });
 
   const initialValues: AuthValues = { username: "", email: "", password: "" };
 
@@ -63,18 +40,40 @@ export default function AuthForm({ mode }: AuthFormProps) {
       .required("Пароль є обов’язковим"),
   });
 
-  const handleSubmit = async (
-    values: AuthValues,
-    { setSubmitting }: FormikHelpers<AuthValues>
-  ) => {
-    setStatus(null);
-    setLoading(true);
-    try {
-      await mutation.mutateAsync(values);
-    } catch {}
+const mutation = useMutation({
+  mutationFn: async (values: AuthValues) => {
+    if (mode === "login") {
+      return await loginUser({ email: values.email!, password: values.password! });
+    } else {
+      return await registerUser({
+        name: values.username!,
+        email: values.email!,
+        password: values.password!,
+      });
+    }
+  },
+  onSuccess: (user) => {
+    setUser(user);
+  },
+  onError: (err: unknown) => {
+    if (err instanceof Error) setStatus(err.message);
+    else setStatus("Сталася помилка. Спробуйте ще раз.");
+  },
+});
+
+const handleSubmit = async (
+  values: AuthValues,
+  { setSubmitting }: FormikHelpers<AuthValues>
+) => {
+  setStatus(null);
+  setLoading(true);
+  try {
+    await mutation.mutateAsync(values);
+  } finally {
     setSubmitting(false);
     setLoading(false);
-  };
+  }
+};
 
   return (
     <Formik
@@ -169,8 +168,11 @@ export default function AuthForm({ mode }: AuthFormProps) {
           </div>
 
           {status && <div className={css.error}>{status}</div>}
+          <AuthNavigation />
         </Form>
       )}
     </Formik>
+
+    
   );
 }
