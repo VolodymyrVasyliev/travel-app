@@ -1,0 +1,95 @@
+.mainContent{
+    display: flex;
+    justify-content: center;
+    height: 90vh;     
+}
+.authBox{
+    padding-top: 60px;
+    width: 80vw;
+    max-width: 644px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.toggleButtons{
+    display: flex;
+    width: 100%;
+}
+
+.chooseButton{
+    flex: 1; 
+    padding: 12px 24px;
+
+    background: white;
+    border: 0px;
+}
+.active{
+    border-bottom: 1px solid #b9b9b9;
+}
+
+.formTitle{
+    font-family: Sora;
+    font-weight: 700;
+    line-height: 120%;
+    letter-spacing: -1%;
+    text-align: center;
+}
+.formMessage{
+    font-family: Nunito Sans;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.formGroup{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.input{
+    height: 36px;
+    padding: 8px;
+
+    border-radius: 8px;
+    border: 1px solid #b9b9b9;
+    outline: none;
+}
+.input:focus {
+    border: 1px solid #4169E1;
+}
+.inputError {
+  border-color: #B00101;   
+  color: #B00101;
+}
+.error{
+    font-family: Nunito Sans;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    color: #B00101;
+}
+
+.submitButton{
+    padding: 6px 12px; 
+    border-radius: 8px;
+
+    height: 44px;
+    width: 100%;
+
+    color: white;
+    background: var(--Color-Royal-Blue, #4169E1);
+    border: none;
+}
+.submitButton:hover, .submitButton:focus{
+    background: var(--Color-Royal-Blue, #2d5ae0);
+}

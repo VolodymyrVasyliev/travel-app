@@ -3,6 +3,8 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import { Nunito_Sans, Sora } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
+import AuthProvider from "@/components/AuthProvider/AuthProvider";
 
 
 const nunito = Nunito_Sans({
@@ -29,6 +31,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <body>
+        <TanStackProvider>
+          <AuthProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </AuthProvider>
+        </TanStackProvider>
       <body className={`${nunito.variable} ${sora.variable}`}>
         <Header />
         {children}
