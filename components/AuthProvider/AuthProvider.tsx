@@ -12,11 +12,19 @@ interface AuthProviderProps {
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const { isAuthenticated, setUser, clearIsAuthenticated, loading, setLoading } = useAuthStore();
+  const {
+    isAuthenticated,
+    setUser,
+    clearIsAuthenticated,
+    loading,
+    setLoading,
+  } = useAuthStore();
   const pathname = usePathname();
   const router = useRouter();
 
-  const isPrivateRoute = privateRoutes.some((route) => pathname.startsWith(route));
+  const isPrivateRoute = privateRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
 
   useEffect(() => {
     const initAuth = async () => {
@@ -25,6 +33,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         const session = await getAuthSession();
         if (session?.success) {
           const userData = await getCurrentUser();
+
           if (userData) {
             setUser(userData);
             return;
@@ -44,7 +53,15 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     if (!isAuthenticated) {
       initAuth();
     }
-  }, [pathname, isPrivateRoute, router, isAuthenticated, setUser, clearIsAuthenticated, setLoading]);
+  }, [
+    pathname,
+    isPrivateRoute,
+    router,
+    isAuthenticated,
+    setUser,
+    clearIsAuthenticated,
+    setLoading,
+  ]);
 
   if (loading) {
     return (

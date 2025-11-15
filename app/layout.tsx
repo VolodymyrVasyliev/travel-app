@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import { Nunito_Sans, Sora } from "next/font/google";
+import Header from "@/components/Header/Header";
+import { Mina, Nunito_Sans, Sora } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
-
+import "./globals.css"
 
 const nunito = Nunito_Sans({
   subsets: ["latin"],
-  variable: "--second-family",
+  variable: "--font-nunito",
   weight: ["400", "500", "600", "700"]
 });
 const sora = Sora({
   subsets: ["latin"],
-  variable: "--first-family",
+  variable: "--font-sora",
    weight: ["400", "700"],
 });
 
@@ -31,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={`${nunito.variable} ${sora.variable}`}>
         <TanStackProvider>
           <AuthProvider>
             <Header />
@@ -39,11 +38,6 @@ export default function RootLayout({
             <Footer />
           </AuthProvider>
         </TanStackProvider>
-      <body className={`${nunito.variable} ${sora.variable}`}>
-        <Header />
-        {children}
-        <Footer />
-
       </body>
     </html>
   );

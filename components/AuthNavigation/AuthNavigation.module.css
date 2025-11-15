@@ -4,6 +4,38 @@
   font-size: 0.9rem;
 }
 
+.loginBtn {
+  padding: 6px 10px;
+
+  text-align: center;
+  color: #000000;
+
+  border-radius: 8px;
+  border: none;
+
+  background: #eaeaea;
+  border: 1px solid rgb(205, 205, 205);
+}
+.loginBtn:hover,
+.loginBtn:focus {
+  background: #d6d6d6;
+}
+
+.registerBtn {
+  padding: 6px 10px;
+
+  text-align: center;
+  color: #ffffff;
+
+  border-radius: 8px;
+  background-color: #4169e1;
+  border: 1px solid #4169e1;
+}
+.registerBtn:hover,
+.registerBtn:focus {
+  background: var(--Color-Royal-Blue, #2d5ae0);
+}
+
 .logoutButton {
   background: transparent;
   border: 1px solid rgb(0, 0, 0);
@@ -12,7 +44,9 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .logoutButton:hover {
@@ -20,11 +54,11 @@
   color: #333;
 }
 
-.navigationItem {
+.navogationList {
   display: flex;
   align-items: center;
   justify-content: end;
-  gap: 16px;
+  gap: 12px;
 }
 
 .navigationLink {

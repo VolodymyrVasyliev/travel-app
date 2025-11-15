@@ -1,5 +1,5 @@
-import { api } from './api';
-import type { User } from '@/types/user';
+import { api } from "./api";
+import type { User } from "@/types/user";
 
 interface AuthPayload {
   email: string;
@@ -14,25 +14,25 @@ export async function getAuthSession() {
 }
 
 export async function getCurrentUser(): Promise<User> {
-  const res = await api.get<User>('/users/me');
-  return res.data;
+  const res = await api.get("/users/me");
+  return res.data.data; //Don't ask. Some backend problem
 }
 
 export async function patchUserProfile(data: Partial<User>): Promise<User> {
-  const res = await api.patch<User>('/users/me', data);
+  const res = await api.patch<User>("/users/me", data);
   return res.data;
 }
 
 export async function registerUser(data: User): Promise<User> {
-  const res = await api.post<User>('/auth/register', data);
+  const res = await api.post<User>("/auth/register", data);
   return res.data;
 }
 
 export async function loginUser(data: AuthPayload): Promise<User> {
-  const res = await api.post<User>('/auth/login', data);
+  const res = await api.post<User>("/auth/login", data);
   return res.data;
 }
 
 export async function logoutUser(): Promise<void> {
-  await api.post('/auth/logout');
+  await api.post("/auth/logout");
 }

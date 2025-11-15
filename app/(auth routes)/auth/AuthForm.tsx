@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { useAuthStore } from "@/lib/store/authStore";
 import { loginUser, registerUser } from "@/lib/api/clientApi";
 import css from "./page.module.css";
-import AuthNavigation from "@/components/AuthNavigation/AuthNavigation";
+import { useRouter } from "next/navigation";
 
 interface AuthFormProps {
   mode: "login" | "register";
@@ -22,6 +22,8 @@ interface AuthValues {
 export default function AuthForm({ mode }: AuthFormProps) {
   const { setUser, setLoading, loading } = useAuthStore();
   const [status, setStatus] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const initialValues: AuthValues = { username: "", email: "", password: "" };
 
@@ -44,7 +46,8 @@ const mutation = useMutation({
   mutationFn: async (values: AuthValues) => {
     if (mode === "login") {
       return await loginUser({ email: values.email!, password: values.password! });
-    } else {
+    }
+    else{
       return await registerUser({
         name: values.username!,
         email: values.email!,
@@ -54,6 +57,7 @@ const mutation = useMutation({
   },
   onSuccess: (user) => {
     setUser(user);
+    router.push('/');
   },
   onError: (err: unknown) => {
     if (err instanceof Error) setStatus(err.message);
@@ -61,14 +65,14 @@ const mutation = useMutation({
   },
 });
 
-const handleSubmit = async (
+const handleSubmit = (
   values: AuthValues,
   { setSubmitting }: FormikHelpers<AuthValues>
 ) => {
   setStatus(null);
   setLoading(true);
   try {
-    await mutation.mutateAsync(values);
+    mutation.mutate(values);
   } finally {
     setSubmitting(false);
     setLoading(false);
@@ -77,7 +81,7 @@ const handleSubmit = async (
 
   return (
     <Formik
-      key={mode} // reset form when mode changes
+      key={mode}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
@@ -168,7 +172,6 @@ const handleSubmit = async (
           </div>
 
           {status && <div className={css.error}>{status}</div>}
-          <AuthNavigation />
         </Form>
       )}
     </Formik>
