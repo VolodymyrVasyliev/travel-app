@@ -1,0 +1,72 @@
+.userEmail {
+  color: rgb(0, 0, 0);
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.loginBtn {
+  padding: 6px 10px;
+
+  text-align: center;
+  color: #000000;
+
+  border-radius: 8px;
+  border: none;
+
+  background: #eaeaea;
+  border: 1px solid rgb(205, 205, 205);
+}
+.loginBtn:hover,
+.loginBtn:focus {
+  background: #d6d6d6;
+}
+
+.registerBtn {
+  padding: 6px 10px;
+
+  text-align: center;
+  color: #ffffff;
+
+  border-radius: 8px;
+  background-color: #4169e1;
+  border: 1px solid #4169e1;
+}
+.registerBtn:hover,
+.registerBtn:focus {
+  background: var(--Color-Royal-Blue, #2d5ae0);
+}
+
+.logoutButton {
+  background: transparent;
+  border: 1px solid rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.logoutButton:hover {
+  background-color: rgb(0, 0, 0);
+  color: #333;
+}
+
+.navogationList {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 12px;
+}
+
+.navigationLink {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+}
+
+.navigationLink:hover {
+  color: #000000;
+}
