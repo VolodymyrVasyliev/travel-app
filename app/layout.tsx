@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
-
-import "./globals.css";
 import Header from "@/components/Header/Header";
+import { Nunito_Sans, Sora } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
+import AuthProvider from "@/components/AuthProvider/AuthProvider";
 
-
+const nunito = Nunito_Sans({
+  subsets: ["latin"],
+  variable: "--second-family",
+  weight: ["400", "500", "600", "700"],
+});
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--first-family",
+  weight: ["400", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,16 +23,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${nunito.variable} ${sora.variable}`}>
       <body>
-        <Header />
-        {children}
-        <Footer />
-
+        <TanStackProvider>
+          <AuthProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </AuthProvider>
+        </TanStackProvider>
       </body>
     </html>
   );

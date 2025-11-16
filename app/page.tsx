@@ -12,7 +12,7 @@ export default function Home() {
       <About />
       <Popular />
       <OurTravellers />
-      <Join />
+      <Join isAuthenticated={false} />
     </main>
   );
 }
