@@ -1,0 +1,149 @@
+.aboutSection {
+  background-color: #F7F9FF;
+  display: block;
+  unicode-bidi: isolate;
+
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.aboutContainer {
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 1440px;
+  padding: 72px 64px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 64px;
+}
+
+.aboutHeader {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.aboutHeading {
+  font-size: 52px;
+  max-width: 755px;
+  color: black;
+}
+
+.aboutDescription {
+  max-width: 533px;
+  font-size: 20px;
+  color: black;
+}
+
+.aboutCards {
+  max-width: 1312px;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  gap: 48px;
+}
+
+.aboutCard {
+  flex: 1 1 calc((100% - 48px) / 3);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.aboutIcon {
+}
+
+.aboutIconSvg {
+}
+
+.aboutCardTitle {
+  font-size: 32px;
+  color: black;
+}
+
+.aboutCardText {
+  font-size: 18px;
+  color: black;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .aboutContainer {
+    padding: 64px 32px;
+  }
+
+  .aboutHeading {
+    font-size: 44px;
+    max-width: 340px;
+  }
+
+  .aboutDescription {
+    max-width: 340px;
+    font-size: 16px;
+  }
+
+  .aboutCards {
+    max-width: 704px;
+    gap: 32px;
+  }
+
+  .aboutCard {
+    flex: 1 1 calc((100% - 32px) / 3);
+    gap: 8px;
+  }
+
+  .aboutCardTitle {
+    font-size: 20px;
+  }
+
+  .aboutCardText {
+    font-size: 16px;
+  }
+}
+
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .aboutContainer {
+    max-width: 375px;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 20px;
+  }
+
+  .aboutHeader {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .aboutHeading {
+    font-size: 28px;
+    max-width: 100%;
+  }
+
+  .aboutDescription {
+    max-width: 100%;
+  }
+
+  .aboutCards {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .aboutCard {
+    gap: 8px;
+  }
+
+  .aboutCardTitle {
+    font-size: 20px;
+  }
+
+  .aboutCardText {
+    font-size: 16px;
+  }
+}
