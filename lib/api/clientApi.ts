@@ -36,3 +36,8 @@ export async function loginUser(data: AuthPayload): Promise<User> {
 export async function logoutUser(): Promise<void> {
   await api.post("/auth/logout");
 }
+
+// export async function savedArticles(articleId: string) {
+//   const res = await api.post<Story>(`saved-articles/${articleId}`);
+//   return res.data;
+// }
