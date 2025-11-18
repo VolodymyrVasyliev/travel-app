@@ -55,18 +55,17 @@
 .imageWrapper {
   padding-top: 16px;
   width: 100%;
-  max-width: 768px;
   height: auto;
   object-fit: cover;
-  border-radius: 24px;
   display: block;
+  border-radius: 24px;
 }
 
 .content {
   padding-top: 64px;
   font-weight: 400;
   font-size: 16px;
-  width: 335px;
+  width: 100%;
   line-height: 150%;
   color: #000;
 }
@@ -113,14 +112,15 @@
 }
 
 .saveButton:hover {
-  background: #4169e1;
+  background-color: #e8eeff;
+  color: #4169e1;
+}
+
+.saveButton:active {
+  background-color: #7a96ea;
 }
 
 @media (min-width: 768px) {
-  .container {
-    width: 704px;
-  }
-
   .title {
     font-weight: 700;
     font-size: 48px;
@@ -129,8 +129,9 @@
   }
   .info {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    align-items: baseline;
+
     width: 704px;
     margin-top: 32px;
   }
@@ -141,7 +142,7 @@
   }
 
   .imageWrapper {
-    width: 500px;
+    width: 704px;
   }
   .content {
     width: 704px;
@@ -187,9 +188,6 @@
 }
 
 @media (min-width: 1440px) {
-  .container {
-    width: auto;
-  }
   .title {
     letter-spacing: -0.01em;
     width: 1000px;

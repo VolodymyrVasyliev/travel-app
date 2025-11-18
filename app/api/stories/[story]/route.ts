@@ -11,16 +11,16 @@ export async function GET(
     const { storyId } = params;
 
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
+    // const accessToken = cookieStore.get("accessToken")?.value;
 
     const res = await api.get(`/stories/${storyId}`, {
       headers: {
         Cookie: cookieStore.toString(),
-        Authorization: `Bearer ${accessToken}`,
+        // Authorization: `Bearer ${accessToken}`,
       },
     });
 
-    return NextResponse.json(res.data, { status: res.status });
+    return NextResponse.json(res.data.data, { status: res.status });
   } catch (error) {
     if (isAxiosError(error)) {
       console.error("Axios error:", error.response?.data);

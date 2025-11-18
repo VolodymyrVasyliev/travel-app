@@ -55,7 +55,9 @@ export async function checkServerSession() {
   return res;
 }
 
-export const getCurrentStory = async (storyId: string) => {
+export const getServerCurrentStory = async (
+  storyId: string
+): Promise<Story> => {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 

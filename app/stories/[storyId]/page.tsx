@@ -1,11 +1,10 @@
-import { getCurrentStory } from "@/lib/api/serverApi";
+import { getServerCurrentStory } from "@/lib/api/serverApi";
 import {
   QueryClient,
   HydrationBoundary,
   dehydrate,
 } from "@tanstack/react-query";
 import StoryDetailsClient from "@/app/stories/[storyId]/StoryDetails.client";
-import Popular from "@/components/Popular/Popular";
 import { Metadata } from "next";
 
 type Props = {
@@ -14,7 +13,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { storyId } = await params;
-  const story = await getCurrentStory(storyId);
+  const story = await getServerCurrentStory(storyId);
   return {
     title: `Story: ${story.title} `,
     description: `Story description: ${story.article?.slice(0, 10)}...`,
@@ -33,8 +32,10 @@ const StoryPage = async ({ params }: Props) => {
 
   await queryClient.prefetchQuery({
     queryKey: ["story", storyId],
-    queryFn: () => getCurrentStory(storyId),
+    queryFn: () => getServerCurrentStory(storyId),
   });
+  console.log("StoryPage", storyId);
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <StoryDetailsClient />

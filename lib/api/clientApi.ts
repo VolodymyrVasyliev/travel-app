@@ -38,12 +38,12 @@ export async function logoutUser(): Promise<void> {
   await api.post("/auth/logout");
 }
 
-// export async function savedArticles(articleId: string) {
-//   const res = await api.post<Story>(`saved-articles/${articleId}`);
+// export async function savedArticles(articleId: string): Promise<Story> {
+//   const res = await api.post<Story>(`/saved-articles/${articleId}`);
 //   return res.data;
 // }
 
-export async function getCurrentStory(storyId: string) {
+export async function getCurrentStory(storyId: string): Promise<Story> {
   const res = await api.get<Story>(`/stories/${storyId}`);
   return res.data;
 }
