@@ -3,7 +3,7 @@ import css from "./VideoWrapper.module.css";
 
 export default function VideoWrapper() {
   return (
-    <div>
+    <section>
       <video
         className={css.backgroundVideo}
         src="/images/herovideo.mp4"
@@ -12,13 +12,10 @@ export default function VideoWrapper() {
         loop
         playsInline
       />
-      <div className={css.videoWrapper}>
-        <div className={css.videoOverlay}>
-          <div className={css.videoContent}>
-            <Hero />
-          </div>
-        </div>
+      <div className={css.videoOverlay}></div>
+      <div className={css.videoContent}>
+        <Hero />
       </div>
-    </div>
+    </section>
   );
 }

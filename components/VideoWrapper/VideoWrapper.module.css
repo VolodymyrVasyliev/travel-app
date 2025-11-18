@@ -2,20 +2,21 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-}
 
+  position: relative;
+  z-index: 2;
+}
 
 .backgroundVideo {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 900px;
   object-fit: cover;
   z-index: -2;
   pointer-events: none;
 }
-
 
 .videoOverlay {
   position: absolute;
@@ -23,12 +24,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.55); 
+  background: rgba(0, 0, 0, 0.55);
   z-index: -1;
+  
 }
-
-
+/* 
 .videoContent {
-  position: relative;
+    position: relative;
   z-index: 2;
-}
+} */
