@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header/Header";
+import Hero from "@/components/Hero/Hero";
 import { Mina, Nunito_Sans, Sora } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
@@ -30,9 +31,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunito.variable} ${sora.variable}`}>
+        <video
+          className="backgroundVideo"
+          src="/images/herovideo.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
         <TanStackProvider>
           <AuthProvider>
-            <Header />
+            <div className="videoWrapper">
+        
+        <div className="videoOverlay"/>
+        <div className="videoContent">
+          <Header />
+          <Hero />
+        </div>
+      </div>
             <main>{children}</main>
             <Footer />
           </AuthProvider>
