@@ -2,6 +2,7 @@ import { Story } from "@/types/story";
 import { AxiosResponse } from "axios";
 import { api } from "./api";
 import type { User } from "@/types/user";
+import { Story } from "@/types/story";
 
 interface AuthPayload {
   email: string;
