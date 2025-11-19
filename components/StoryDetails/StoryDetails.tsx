@@ -9,12 +9,12 @@ import { useState } from "react";
 // import { useAuthStore } from "@/lib/store/authStore";
 
 type StoryDetailsProps = {
-  data?: Story;
+  data: Story;
 };
 
 export default function StoryDetails({ data }: StoryDetailsProps) {
-  const [saved, setSaved] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [saved, setSaved] = useState(false);
+  // const [loading, setLoading] = useState(false);
   // const router = useRouter();
   // const user = useAuthStore((state) => state.user);
   // const token = useAuthStore((state) => state.isAuthenticated);
@@ -33,7 +33,7 @@ export default function StoryDetails({ data }: StoryDetailsProps) {
   //   savedArticles(story._id);
   //   setSaved(true);
   // };
-  console.log(data);
+ 
 
   return (
     <div className={css.container}>
@@ -79,9 +79,8 @@ export default function StoryDetails({ data }: StoryDetailsProps) {
           <button
             className={css.saveButton}
             // onClick={handleSave}
-            disabled={saved || loading}
           >
-            {saved ? "Збережено" : loading ? "Збереження..." : "Зберегти"}
+            Зберегти
           </button>
         </section>
       </div>
