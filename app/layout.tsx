@@ -31,24 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunito.variable} ${sora.variable}`}>
-        <video
-          className="backgroundVideo"
-          src="/images/herovideo.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
         <TanStackProvider>
           <AuthProvider>
-            <div className="videoWrapper">
-        
-        <div className="videoOverlay"/>
-        <div className="videoContent">
-          <Header />
-          <Hero />
-        </div>
-      </div>
+            <Header />
             <main>{children}</main>
             <Footer />
           </AuthProvider>
