@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { api } from "@/lib/api/api";
+import { localAPI } from "@/lib/localAPI";
 import { logErrorResponse } from "@/app/api/_utils/utils";
 import { isAxiosError } from "axios";
 
@@ -13,7 +13,7 @@ export async function GET(req: Request, { params }: Props) {
     const cookieStore = await cookies();
     const { storyId } = await params;
 
-    const res = await api.get(`/stories/${storyId}`, {
+    const res = await localAPI.get(`/stories/${storyId}`, {
       headers: {
         Cookie: cookieStore.toString(),
         // Authorization: `Bearer ${accessToken}`, // если нужен токен
