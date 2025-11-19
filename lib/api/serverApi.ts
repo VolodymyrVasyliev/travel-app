@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { localAPI } from "../localAPI";
 import { Story } from "@/types/story";
 import { cookies } from "next/headers";
 import type { User } from "@/types/user";
@@ -7,7 +7,7 @@ export async function getAuthSessionServer() {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const res = await api.get("/auth/session", {
+  const res = await localAPI.get("/auth/session", {
     headers: {
       Cookie: cookieHeader,
     },
@@ -20,7 +20,7 @@ export async function getUserServer(): Promise<User> {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const res = await api.get("/users/me", {
+  const res = await localAPI.get("/users/me", {
     headers: {
       Cookie: cookieHeader,
     },
@@ -35,7 +35,7 @@ export async function patchUserProfileServer(
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const res = await api.patch<User>("/users/me", data, {
+  const res = await localAPI.patch<User>("/users/me", data, {
     headers: { Cookie: cookieHeader },
   });
 
@@ -46,7 +46,7 @@ export async function checkServerSession() {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const res = await api.get("/auth/session", {
+  const res = await localAPI.get("/auth/session", {
     headers: {
       Cookie: cookieHeader,
     },
@@ -61,7 +61,7 @@ export const getServerCurrentStory = async (
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const res = await api.get<Story>(`/stories/${storyId}`, {
+  const res = await localAPI.get<Story>(`/stories/${storyId}`, {
     headers: {
       Cookie: cookieHeader,
     },

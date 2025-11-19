@@ -62,8 +62,12 @@ export default function AuthForm({ mode }: AuthFormProps) {
     onSuccess: (user) => {
       console.log(user.data.user);
 
-      setUser(user.data.user);
-      router.push("/");
+      if (mode === "login") {
+        setUser(user.data.user);
+        router.push("/");
+      } else {
+        router.push("/auth/login");
+      }
     },
     onError: (err: unknown) => {
       if (err instanceof Error) setStatus(err.message);
