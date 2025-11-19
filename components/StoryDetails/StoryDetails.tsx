@@ -1,8 +1,8 @@
-// import { Story } from "@/types/story";
+import { Story } from "@/types/story";
 import css from "@/components/StoryDetails/StoryDetails.module.css";
-// type StoryDetailsProps = {
-//   story: Story;
-// };
+type StoryDetailsProps = {
+  story: Story;
+};
 
 export default function StoryDetails() {
   return (

@@ -1,5 +1,6 @@
 import { api } from "./api";
 import type { User } from "@/types/user";
+import { Story } from "@/types/story";
 
 interface AuthPayload {
   email: string;
@@ -37,7 +38,3 @@ export async function logoutUser(): Promise<void> {
   await api.post("/auth/logout");
 }
 
-// export async function savedArticles(articleId: string) {
-//   const res = await api.post<Story>(`saved-articles/${articleId}`);
-//   return res.data;
-// }
