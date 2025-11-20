@@ -19,7 +19,11 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    Nunito Sans,
+    Arial,
+    Helvetica,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -33,41 +37,6 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
-.videoWrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-
-}
-
-
-.backgroundVideo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -2;
-  pointer-events: none;
-}
-
-
-.videoOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.55); 
-  z-index: -1;
-}
-
-
-.videoContent {
-  position: relative;
-  z-index: 2;
 }
 
 @media (prefers-color-scheme: dark) {

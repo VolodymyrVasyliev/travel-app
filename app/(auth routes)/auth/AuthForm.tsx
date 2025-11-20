@@ -30,7 +30,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const validationSchema = Yup.object({
     username:
       mode === "register"
-        ? Yup.string().max(32, "Максимум 32 символи").required("Ім’я є обов’язковим")
+        ? Yup.string()
+            .max(32, "Максимум 32 символи")
+            .required("Ім’я є обов’язковим")
         : Yup.string().notRequired(),
     email: Yup.string()
       .email("Некоректна електронна пошта")
@@ -42,42 +44,50 @@ export default function AuthForm({ mode }: AuthFormProps) {
       .required("Пароль є обов’язковим"),
   });
 
-const mutation = useMutation({
-  mutationFn: async (values: AuthValues) => {
-    if (mode === "login") {
-      return await loginUser({ email: values.email!, password: values.password! });
-    }
-    else{
-      return await registerUser({
-        name: values.username!,
-        email: values.email!,
-        password: values.password!,
-      });
-    }
-  },
-  onSuccess: (user) => {
-    setUser(user);
-    router.push('/');
-  },
-  onError: (err: unknown) => {
-    if (err instanceof Error) setStatus(err.message);
-    else setStatus("Сталася помилка. Спробуйте ще раз.");
-  },
-});
+  const mutation = useMutation({
+    mutationFn: async (values: AuthValues) => {
+      if (mode === "login") {
+        return await loginUser({
+          email: values.email!,
+          password: values.password!,
+        });
+      } else {
+        return await registerUser({
+          name: values.username!,
+          email: values.email!,
+          password: values.password!,
+        });
+      }
+    },
+    onSuccess: (user) => {
+      console.log(user.data.user);
 
-const handleSubmit = (
-  values: AuthValues,
-  { setSubmitting }: FormikHelpers<AuthValues>
-) => {
-  setStatus(null);
-  setLoading(true);
-  try {
-    mutation.mutate(values);
-  } finally {
-    setSubmitting(false);
-    setLoading(false);
-  }
-};
+      if (mode === "login") {
+        setUser(user.data.user);
+        router.push("/");
+      } else {
+        router.push("/auth/login");
+      }
+    },
+    onError: (err: unknown) => {
+      if (err instanceof Error) setStatus(err.message);
+      else setStatus("Сталася помилка. Спробуйте ще раз.");
+    },
+  });
+
+  const handleSubmit = (
+    values: AuthValues,
+    { setSubmitting }: FormikHelpers<AuthValues>
+  ) => {
+    setStatus(null);
+    setLoading(true);
+    try {
+      mutation.mutate(values);
+    } finally {
+      setSubmitting(false);
+      setLoading(false);
+    }
+  };
 
   return (
     <Formik
@@ -88,7 +98,9 @@ const handleSubmit = (
     >
       {({ isSubmitting, errors, touched }) => (
         <Form className={css.form}>
-          <h1 className={css.formTitle}>{mode === "login" ? "Вхід" : "Реєстрація"}</h1>
+          <h1 className={css.formTitle}>
+            {mode === "login" ? "Вхід" : "Реєстрація"}
+          </h1>
           <p className={css.formMessage}>
             {mode === "login"
               ? "Вітаємо знову у спільноті мандрівників!"
@@ -132,7 +144,9 @@ const handleSubmit = (
                 />
               )}
             </Field>
-            {touched.email && errors.email && <div className={css.error}>{errors.email}</div>}
+            {touched.email && errors.email && (
+              <div className={css.error}>{errors.email}</div>
+            )}
           </div>
 
           <div className={css.formGroup}>
@@ -166,8 +180,8 @@ const handleSubmit = (
                   ? "Виконується вхід..."
                   : "Виконується реєстрація..."
                 : mode === "login"
-                ? "Увійти"
-                : "Зареєструватись"}
+                  ? "Увійти"
+                  : "Зареєструватись"}
             </button>
           </div>
 
@@ -175,7 +189,5 @@ const handleSubmit = (
         </Form>
       )}
     </Formik>
-
-    
   );
 }

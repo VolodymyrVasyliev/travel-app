@@ -14,9 +14,5 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     router.refresh();
   }, [router]);
 
-  return (
-    <div>
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 }

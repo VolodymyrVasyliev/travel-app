@@ -1,14 +1,11 @@
-// import { Story } from "@/types/story";
+import { Story } from "@/types/story";
 import css from "@/components/StoryDetails/StoryDetails.module.css";
-// type StoryDetailsProps = {
-//   story: Story;
-// };
 
-export default function StoryDetails() {
+export default function StoryDetails(story : Story) {
   return (
     <div className={css.container}>
       <h2 className={css.title}>
-        Венеція без туристів: маршрути для справжніх мандрівників
+        {story.title}
       </h2>
       <div className={css.info}>
         <div className={css.info_row}>
@@ -16,7 +13,7 @@ export default function StoryDetails() {
             Автор статті <span className={css.author}> Ім`я автора</span>
           </p>
           <p className={css.meta}>
-            Опубліковано<span className={css.date}>23.07.2025</span>
+            Опубліковано<span className={css.date}>{story.date}</span>
           </p>
         </div>
 
@@ -32,14 +29,7 @@ export default function StoryDetails() {
       <div className={css.container_story_save}>
         <article className={css.content}>
           <p>
-            Венеція — це не лише площа Святого Марка і гондоли на Канале Ґранде.
-            Ми вирішили дослідити місто з іншого боку — вулицями, де не ходять
-            натовпи, де старі венеціанці щодня п`ють еспресо на розі, а сусідки
-            обговорюють погоду через балкони. Виявляється, є цілий район —
-            Кастелло, де майже немає туристів, але є мальовничі канали,
-            старовинні церкви і рибні ринки. Відкрили для себе і острів Джудекка
-            — справжню Венецію без пафосу. У блозі ділюсь маршрутами, куди варто
-            заглянути, аби побачити справжнє місто.
+            {story.article}
           </p>
         </article>
 

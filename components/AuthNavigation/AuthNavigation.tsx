@@ -22,8 +22,6 @@ export default function AuthNavigation() {
   };
 
   if (isAuthenticated && user) {
-    console.log(user);
-
     return (
       <nav className={css.navogationList}>
         <Image
