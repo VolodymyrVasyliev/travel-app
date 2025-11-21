@@ -28,18 +28,28 @@
 
 /* Logo */
 .logo {
-  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
   font-weight: 600;
-  font-size: 22px;
+  font-size: 32px;  
+}
+
+.span {
+  font-family: "Sora", sans-serif;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #000;
+  position: relative;
+  top: -5px; /* поднимает текст вверх */
 }
 
 /* Social icons row */
 .social {
   display: flex;
   gap: 16px;
-  font-size: 26px;
+  font-size: 32px;
 }
 
 .social a {

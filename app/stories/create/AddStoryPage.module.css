@@ -5,7 +5,27 @@
   padding: 64px 0 64px;
   flex-direction: column;
   gap: 32px;
-  background-color: #ffff;
+  background-color: #f7f9ff;
+}
+
+.selectWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%; /* щоб меню не вилітало */
+}
+
+.selectField {
+  width: 100%;
+  appearance: none; /* прибирає стандартну стрілку */
+  padding-right: 32px; /* місце для іконки */
+}
+
+.arrowIcon {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 /* Заголовок */

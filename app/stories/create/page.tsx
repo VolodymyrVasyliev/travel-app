@@ -1,20 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import styles from "./AddStoryPage.module.css";
-import { Story } from "@/types/story";
-import { useRef } from "react";
-import { postNewStory } from "@/lib/api/clientApi";
 
 type FormData = {
   storyImage: File | null;
   title: string;
-  // shortDescription: string;
   description: string;
   category: string;
 };
@@ -31,7 +27,11 @@ const categoryOptions = [
   { value: "68fb50c80ae91338641121f1", label: "Гори" },
 ];
 
-export default function AddStoryPage() {
+interface AddStoryPageProps {
+  accessToken: string;
+}
+
+export default function AddStoryPage({ accessToken }: AddStoryPageProps) {
   const router = useRouter();
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -40,62 +40,66 @@ export default function AddStoryPage() {
     fileInputRef.current?.click();
   };
 
-  // React Query Mutation
   const createStoryMutation = useMutation({
-    mutationFn: async (formData: FormData) => {
-      return await postNewStory(formData);
+    mutationFn: async (values: FormData) => {
+      const formData = new FormData();
+      if (values.storyImage) formData.append("storyImage", values.storyImage);
+      formData.append("title", values.title);
+      formData.append("description", values.description);
+      formData.append("category", values.category);
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stories`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || "Помилка створення історії");
+      }
+
+      return res.json();
     },
     onSuccess: (data) => {
-      console.log(`/stories/${data._id}`);
-
-      router.push(`/stories/${data._id}`);
+      router.push(`/stories/${data.data._id}`);
     },
-    onError: () => {
-      alert("Помилка збереження");
+    onError: (error: any) => {
+      alert(
+        error instanceof Error ? error.message : "Помилка створення історії"
+      );
     },
   });
 
   const validationSchema = Yup.object({
-    storyImage: Yup.mixed().required("Додайте зображення"),
+    storyImage: Yup.mixed().nullable(),
     title: Yup.string()
       .max(80, "Максимум 80 символів")
       .required("Введіть заголовок"),
-    // shortDescription: Yup.string().max(61, "Максимум 61 символ"),
-    // .required("Введіть короткий опис"),
+    shortDescription: Yup.string().max(61, "Максимум 61 символ"),
     description: Yup.string()
       .max(2500, "Максимум 2500 символів")
       .required("Введіть текст історії"),
     category: Yup.string().required("Оберіть категорію"),
   });
 
-  const formik = useFormik<FormData>({
+  const formik = useFormik<FormData & { shortDescription?: string }>({
     initialValues: {
       storyImage: null,
       title: "",
-      // shortDescription: "",
       description: "",
       category: "",
+      shortDescription: "", // поле існує лише для UI
     },
-    validateOnMount: true,
     validationSchema,
+    validateOnMount: true,
     onSubmit: (
-      values: FormData,
-      { setSubmitting }: FormikHelpers<FormData>
+      values: FormData & { shortDescription?: string },
+      { setSubmitting }
     ) => {
-      const formData = new FormData();
-
-      if (values.storyImage) {
-        formData.append("storyImage", values.storyImage as Blob);
-      }
-
-      formData.append("title", values.title);
-      // formData.append("shortDescription", values.shortDescription);
-      formData.append("description", values.description);
-      formData.append("category", values.category);
-
-      // formData.append("date", new Date().toISOString());
-
-      createStoryMutation.mutate(formData);
+      createStoryMutation.mutate(values); // shortDescription не відправляється
       setSubmitting(false);
     },
   });
@@ -105,7 +109,6 @@ export default function AddStoryPage() {
       <form onSubmit={formik.handleSubmit} className={styles.formWrapper}>
         <div className={styles.left}>
           <h1 className={styles.title}>Створити нову історію</h1>
-          {/* Обкладинка */}
 
           <label className={styles.label}>Обкладинка статті</label>
           <div className={styles.coverPreview}>
@@ -125,9 +128,7 @@ export default function AddStoryPage() {
               </div>
             )}
           </div>
-          {formik.errors.storyImage && formik.touched.storyImage && (
-            <p className={styles.error}>{formik.errors.storyImage}</p>
-          )}
+
           <input
             type="file"
             accept="image/*"
@@ -141,62 +142,76 @@ export default function AddStoryPage() {
               }
             }}
           />
-
           <button
             type="button"
             className={styles.uploadBtn}
             onClick={handleFileButtonClick}
           >
-            <span className={styles.btnSpan}>Завантажити фото</span>
+            Завантажити фото
           </button>
 
-          {/* Заголовок */}
           <div className={styles.field}>
             <label>Заголовок</label>
             <input
               type="text"
               name="title"
-              placeholder="Введіть заголовок історії"
+              placeholder="Введіть заголовок"
               value={formik.values.title}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className={styles.storieTitle}
             />
-            {formik.errors.title && formik.touched.title && (
+            {formik.touched.title && formik.errors.title && (
               <p className={styles.error}>{formik.errors.title}</p>
             )}
           </div>
 
-          {/* Категорія */}
           <div className={styles.field}>
             <label>Категорія</label>
-            <select
-              name="category"
-              value={formik.values.category}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={styles.selectField}
-            >
-              <option value="">Категорія</option>
-              {categoryOptions.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-            {formik.errors.category && formik.touched.category && (
+            <div className={styles.selectWrapper}>
+              <select
+                name="category"
+                value={formik.values.category}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={styles.selectField}
+              >
+                <option value="">Оберіть категорію</option>
+                {categoryOptions.map((c) => (
+                  <option key={c.value} value={c.value}>
+                    {c.label}
+                  </option>
+                ))}
+              </select>
+              <div className={styles.arrowIcon}>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.08691 9.02344C7.18774 9.02344 7.26471 9.05385 7.34277 9.13184L11.6455 13.459L11.999 13.8145L16.6816 9.13184C16.7593 9.05424 16.8257 9.03227 16.9062 9.03516C17.0005 9.0386 17.0819 9.07117 17.168 9.15723C17.246 9.23531 17.2764 9.31223 17.2764 9.41309C17.2763 9.51371 17.2458 9.59001 17.168 9.66797L12.249 14.5869C12.1949 14.6411 12.1522 14.667 12.124 14.6787C12.0885 14.6935 12.0486 14.7021 12 14.7021C11.9755 14.7021 11.9532 14.6993 11.9326 14.6953L11.875 14.6787L11.8223 14.6484C11.8015 14.634 11.7779 14.6138 11.751 14.5869L6.80664 9.64355C6.7328 9.56972 6.70662 9.50009 6.70996 9.40527C6.71375 9.29797 6.74977 9.2141 6.83203 9.13184C6.90996 9.05403 6.98632 9.02351 7.08691 9.02344Z"
+                    fill="black"
+                    stroke="black"
+                  />
+                </svg>
+              </div>
+            </div>
+            {formik.touched.category && formik.errors.category && (
               <p className={styles.error}>{formik.errors.category}</p>
             )}
           </div>
 
-          {/* Короткий опис */}
-          {/* <div className={styles.hidden}>
+          {/* Короткий опис - для UI, не відправляється */}
+          <div className={styles.hidden}>
             <div className={styles.field}>
               <label className={styles.shortDescLabel}>Короткий опис</label>
               <textarea
                 name="shortDescription"
                 placeholder="Введіть короткий опис"
-                value={formik.values.shortDescription}
+                value={formik.values.shortDescription || ""}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 maxLength={61}
@@ -205,16 +220,9 @@ export default function AddStoryPage() {
               <div className={styles.counter}>
                 {formik.values.shortDescription?.length || 0}/61
               </div>
-              {formik.errors.shortDescription &&
-                formik.touched.shortDescription && (
-                  <p className={styles.error}>
-                    {formik.errors.shortDescription}
-                  </p>
-                )}
             </div>
-          </div> */}
+          </div>
 
-          {/* Текст історії */}
           <div className={styles.field}>
             <label>Текст історії</label>
             <textarea
@@ -225,7 +233,7 @@ export default function AddStoryPage() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
-            {formik.errors.description && formik.touched.description && (
+            {formik.touched.description && formik.errors.description && (
               <p className={styles.error}>{formik.errors.description}</p>
             )}
           </div>
