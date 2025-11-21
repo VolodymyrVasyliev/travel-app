@@ -1,124 +1,79 @@
 .aboutSection {
   background-color: #F7F9FF;
-  display: block;
-  unicode-bidi: isolate;
-
-  width: 100%;
-  margin: 0;
-  box-sizing: border-box;
+  padding: 64px 20px;
 }
 
 .aboutContainer {
-  align-items: center;
-  box-sizing: border-box;
-  max-width: 1440px;
-  padding: 72px 64px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  flex: 1;
   gap: 64px;
 }
 
 .aboutHeader {
   display: flex;
-  flex-direction: row;
-  gap: 24px;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
 }
 
 .aboutHeading {
-  font-size: 52px;
-  max-width: 755px;
-  color: black;
+  font-family: "Sora", sans-serif;
+  font-size: clamp(28px, 8vw, 36px);
+  line-height: 1.2;
+  color: #000;
 }
 
 .aboutDescription {
-  max-width: 533px;
-  font-size: 20px;
-  color: black;
+  color: #333;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--color-scheme-2-text);
+  color: #000;
+  padding: 8px 0px 0px;
 }
 
 .aboutCards {
-  max-width: 1312px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 40px;
   list-style: none;
-  flex-direction: row;
   padding: 0;
   margin: 0;
-  gap: 48px;
 }
 
 .aboutCard {
-  flex: 1 1 calc((100% - 48px) / 3);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
+  text-align: left;
 }
 
 .aboutIcon {
-}
-
-.aboutIconSvg {
+  width: 48px;
+  height: 48px;
+  align-self: left;
+  fill: #000;
 }
 
 .aboutCardTitle {
-  font-size: 32px;
-  color: black;
+  font-family: "Sora", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
 }
 
 .aboutCardText {
-  font-size: 18px;
-  color: black;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1439px) {
-  .aboutContainer {
-    padding: 64px 32px;
-  }
-
-  .aboutHeading {
-    font-size: 44px;
-    max-width: 340px;
-  }
-
-  .aboutDescription {
-    max-width: 340px;
-    font-size: 16px;
-  }
-
-  .aboutCards {
-    max-width: 704px;
-    gap: 32px;
-  }
-
-  .aboutCard {
-    flex: 1 1 calc((100% - 32px) / 3);
-    gap: 8px;
-  }
-
-  .aboutCardTitle {
-    font-size: 20px;
-  }
-
-  .aboutCardText {
-    font-size: 16px;
-  }
-}
-
-
-@media screen and (min-width: 375px) and (max-width: 767px) {
-  .aboutContainer {
-    max-width: 375px;
-    align-items: center;
-    justify-content: center;
-    padding: 64px 20px;
-  }
-
+@media screen and (min-width: 375px) {
   .aboutHeader {
-    flex-direction: column;
     gap: 24px;
+    text-align: left;
   }
 
   .aboutHeading {
@@ -127,16 +82,12 @@
   }
 
   .aboutDescription {
+    font-size: 16px;
     max-width: 100%;
   }
 
   .aboutCards {
-    flex-direction: column;
     gap: 32px;
-  }
-
-  .aboutCard {
-    gap: 8px;
   }
 
   .aboutCardTitle {
@@ -145,5 +96,88 @@
 
   .aboutCardText {
     font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+
+  .aboutHeader {
+    flex-direction: row;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  .aboutHeading {
+    font-size: 44px;
+    max-width: 340px;
+  }
+
+  .aboutDescription {
+    font-size: 16px;
+    max-width: 340px;
+  }
+
+  .aboutCards {
+    flex-direction: row;
+    justify-content: center;
+    gap: 32px;
+    max-width: 704px;
+    margin: 0 auto;
+  }
+
+  .aboutCard {
+    flex: 1 1 calc((100% - 32px) /3);
+    text-align: left;
+    gap: 8px;
+  }
+
+  .aboutIcon {
+    align-self: flex-start;
+  }
+
+  .aboutCardTitle {
+    font-size: 20px;
+  }
+
+  .aboutCardText {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+
+  .aboutHeader {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .aboutHeading {
+    font-size: 52px;
+    max-width: 755px;
+  }
+
+  .aboutDescription {
+    font-size: 20px;
+    max-width: 533px;
+  }
+
+  .aboutCards {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 48px;
+    max-width: 1312px;
+  }
+
+  .aboutCard {
+    flex: 1 1 calc((100% - 96px) / 3);
+    gap: 24px;
+  }
+
+  .aboutCardTitle {
+    font-size: 32px;
+  }
+
+  .aboutCardText {
+    font-size: 18px;
   }
 }
