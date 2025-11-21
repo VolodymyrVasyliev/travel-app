@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Header from "@/components/Header/Header";
 import Hero from "@/components/Hero/Hero";
 import { Mina, Nunito_Sans, Sora } from "next/font/google";
-import Footer from "@/components/Footer/Footer";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import "./globals.css";
+import FooterWrapper from "@/components/Footer/FooterWrapper";
 
 const nunito = Nunito_Sans({
   subsets: ["latin"],
@@ -35,7 +35,7 @@ export default function RootLayout({
           <AuthProvider>
             <Header />
             <main>{children}</main>
-            <Footer />
+            <FooterWrapper hideOn={["/auth/login", "/auth/register"]} />
           </AuthProvider>
         </TanStackProvider>
       </body>

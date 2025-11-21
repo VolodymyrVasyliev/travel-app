@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 import { localAPI } from "../localAPI";
 import type { User } from "@/types/user";
 import { backendAPI } from "../backendAPI";
+import { CreateStoryFormData } from "@/types/createStoryFormData";
 
 interface AuthPayload {
   email: string;
@@ -54,4 +55,9 @@ export async function logoutUser(): Promise<void> {
 export async function getCurrentStory(storyId: string): Promise<Story> {
   const res = await localAPI.get<Story>(`/stories/${storyId}`);
   return res.data;
+}
+
+export async function postNewStory(params: CreateStoryFormData) {
+  const response = await localAPI.post("/stories", params);
+  return response.data.data;
 }

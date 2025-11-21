@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 import { getAuthSession, getCurrentUser } from "@/lib/api/clientApi";
 
-const privateRoutes = ["/profile", "/dashboard"];
+const privateRoutes = ["/profile", "/dashboard", "/stories/create"];
 
 interface AuthProviderProps {
   children: ReactNode;
