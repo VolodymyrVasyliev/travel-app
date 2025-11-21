@@ -81,7 +81,7 @@
 .btnTraveller {
   display: block;
   margin: 0 auto;
-  width: 156px;
+  width: 100%;
   height: 48px;
   font-family: inherit;
   font-size: 16px;
